@@ -4,8 +4,24 @@ function compute()
     interest = document.getElementById("interest").value;
     years = document.getElementById("years").value;
 
+    if(isNaN(principle)){
+        alert("The principle amount must be a positive number")
+        setTimeout(function(){
+            document.getElementById("amount").focus();
+        }, 1);
+        return;
+    }
 
-    total = Math.round(principle*(Math.pow(1+(interest/1000), years))*100)/100
+    if(principle <= 0){
+        alert("The principle amount must be a positive number")
+        setTimeout(function(){
+            document.getElementById("amount").focus();
+        }, 1);
+        return;
+    }
+
+
+    total = Math.round(principle*(Math.pow(1+(interest/100), years))*100)/100
     console.log("principle: $" + principle + " invested at a rate of: " + (interest/10) + "% for " + years + " years. Return: " + total)
 
     output(principle, interest, years, total)
@@ -15,7 +31,7 @@ function compute()
 
 function sliderChange(value)
 {
-    document.getElementById('sliderVal').innerHTML = value/10 + "%";
+    document.getElementById('sliderVal').innerHTML = Number(value).toFixed(1) + "%";
 }
 
 document.getElementById("interest").oninput = function() {
@@ -27,7 +43,7 @@ document.getElementById("compute").onclick = compute;
 
 function output(p, i, y, t){
     year = Number(new Date().getFullYear()) + Number(y);
-    document.getElementById("output").innerHTML=`If you deposit <span class="highlighted">$${p}</span>, <br/> at a rate of <span class="highlighted">${i/10}%</span>. <br/> You will receive an amount of <span class="highlighted">$${t}</span>,<br/> in the year <span class="highlighted">${(year)}</span>`
+    document.getElementById("output").innerHTML=`If you deposit <span class="highlighted">$${p}</span>, <br/> at a rate of <span class="highlighted">${Number(i).toFixed(1)}%</span>. <br/> You will receive an amount of <span class="highlighted">$${t}</span>,<br/> in the year <span class="highlighted">${(year)}</span>`
 
 }
 
